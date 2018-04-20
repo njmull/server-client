@@ -91,6 +91,7 @@ namespace SpreadsheetGUI
             //Checks to see if a circular dependency was found and display #REF in the selected cell on update if it was
             if (isCircular == true)
             {
+                MessageBox.Show("The formula you entered results in a circular exception.");
                 ss.SetValue(col, row, "#REF");
                 CellValueField.Text = "#REF";
                 isCircular = false;
@@ -143,64 +144,31 @@ namespace SpreadsheetGUI
                 //CS 3505 changes ////////////////////////////////////
 
 
-
                 foreach (string cell in sheet.GetDirectDependents(name))
                 {
-                    //if (CircularDependencyCheck(name, name, visited) == true)
-                    //    sheet.SetCellCircularStatus(name, true);
                     if (!visited.Contains(cell))
                     {
                         CircularDependencyCheck(cell, cell, visited, circular);
-                        //updateCell(cell, ss);
                     }
                     circular.Add(cell);
                 }
 
 
-
-
                 foreach (String s in altered)
                 {
-                    //sheet.SetCellCircularStatus(s, false);
                     updateCell(s, ss);
-                    //if (sheet.GetCellCircularStatus(s) == true)
-                    //    isCircular = true;
                 }
 
                 foreach (string c in circular)
                 {
-                    //if (sheet.GetCellCircularStatus(c) == true)
-                    //{
-                    //    isCircular = true;
-
-                    //}
                     sheet.SetCellCircularStatus(c, false);
                 }
-
-
-
 
 
                 //    //end ////////////////////////////////////////////////
 
                 displaySelection(ss);
 
-                //isCircular = false;
-
-                //if (circStatus(circular) == true)
-                //{
-                //    altered.Remove(name);
-                //    sheet.SetCellCircularStatus(name, true);
-                //    altered.Add(name);
-
-
-                //    updateCell(name, ss);
-                //}
-
-
-
-
-                //updateCell(name, ss);
             }
             catch (FormulaFormatException e)
             {
@@ -208,36 +176,6 @@ namespace SpreadsheetGUI
             }
             catch (CircularException e)
             {
-                ////CS 3505 changes ////////////////////////////////////
-
-                //string contentBeforeFormualTrim = ContentField.Text;
-                //string afterFormulaTrim = contentBeforeFormualTrim.Trim(new Char[] { '=' });
-
-                ////altered = sheet.SetContentsOfCell(name, ContentField.Text);
-                //altered = sheet.SetContentsOfCell(name, afterFormulaTrim);
-                ////sheet.SetCellCircularStatus(name, true);
-
-                ////altered = sheet.SetContentsOfCell(name, ContentField.Text);
-
-
-                //foreach (string cell in sheet.GetDirectDependents(name))
-                //{
-                //    altered.Add(cell);
-                //}
-
-                //foreach (String cell in altered)
-                //{
-                //    sheet.SetCellCircularStatus(cell, true);
-                //    updateCell(cell, ss);
-                //}
-
-                ////ss.SetValue(col, row, "#REF");
-
-                //displaySelection(ss);
-
-
-                ////end ////////////////////////////////////////////////
-
                 MessageBox.Show("The formula you entered results in a circular exception.");
             }
             catch (Exception e)
@@ -246,17 +184,14 @@ namespace SpreadsheetGUI
             }
         }
 
-        public bool circStatus(ISet<string> list)
-        {
-            foreach (string cell in list)
-            {
-                if (sheet.GetCellCircularStatus(cell) == true)
-                    return true;
-            }
-            return false;
-        }
-
-
+        /// <summary>
+        /// Recursively check for circular dependency then modifies the cells circular status 
+        /// accordingly and adds that cells name to a list for further checks.
+        /// </summary>
+        /// <param name="start"></param>
+        /// <param name="name"></param>
+        /// <param name="visited"></param>
+        /// <param name="altered"></param>
         public void CircularDependencyCheck(string start, string name, ISet<string> visited, ISet<string> altered)
         {
             visited.Add(name);
@@ -269,20 +204,17 @@ namespace SpreadsheetGUI
                     {
                         sheet.SetCellCircularStatus(c, true);
                         altered.Add(c);
-
+                        ////////
+                        //CircularDependencyCheck(c, c, visited, altered);
+                        /////////
                     }
-                    //altered.Remove(start);
                     sheet.SetCellCircularStatus(start, true);
-                    //altered.Add(start);
-
                 }
                 else if (!visited.Contains(cell))
                 {
                     CircularDependencyCheck(start, cell, visited, altered);
                 }
             }
-            //altered.Add(name);
-
         }
 
 
@@ -540,12 +472,6 @@ namespace SpreadsheetGUI
         {
             int col = name.ElementAt(0) - 65;
             int row = int.Parse(name.Substring(1)) - 1;
-
-            //if (sheet.GetCellCircularStatus(name) == true)
-            //{
-            //    spreadsheetPanel1.SetValue(col, row, "CIRC");
-
-            //}
 
             if (sheet.GetCellValue(name) is FormulaError err)
             {
