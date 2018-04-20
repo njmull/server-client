@@ -106,7 +106,7 @@ namespace SpreadsheetGUI
                 catch { }
 
                 // Then remove the processed message from the SocketState's growable buffer
-                //state.ReceiveBuffer.Remove(0, p.Length);
+                state.sb.Remove(0, p.Length);
 
             }
 
@@ -116,20 +116,28 @@ namespace SpreadsheetGUI
 
         // This function will determine what a received message is, and deal with
         // it appropriately.
-        public static void Receive(string cmd)
+        public void Receive(string cmd)
         {
             // Acknowledge new client and give list of existing spreadsheets. The list may be empty.
-            if (cmd.Contains("connection_accepted "))
+            if (cmd.Contains("connect_accepted "))
             {
-                string[] sheets = Regex.Split(cmd, "\n");
+                cmd = cmd.Substring(16);
+                string [] sheets = Regex.Split(cmd, "\n");
 
-                // Do gui stuff to get the sheet
+                try
+                {
+                    foreach (string spreadsheet in sheets)
+                    {
+                        if (spreadsheet == "")
+                            continue;
 
-                //foreach (string spreadsheet in sheets)
-                //{
-                //    ListOfSpreadSheetsBox.Items.Add(spreadsheet);
-                //}
-
+                        spreadsheet.Trim();
+                        spreadsheet.TrimStart(' ');
+                        this.Invoke(new MethodInvoker(() => ListOfSpreadSheetsBox.Items.Add(spreadsheet)));
+                    }
+                    ChangeFromConnectToLoad();
+                }
+                catch { }
                 //ChangeFromConnectToLoad();
 
 
@@ -185,7 +193,7 @@ namespace SpreadsheetGUI
                 string[] pairs = temp.Split(':');
                 string cell = pairs[0];
                 string value = pairs[1];
-                UpdateCell(cell, value);
+                this.Invoke(new MethodInvoker(() => UpdateCell(cell, value)));
 
             }
 
@@ -225,11 +233,6 @@ namespace SpreadsheetGUI
             this.Close();
         }
 
-        private void NewSpreadsheetButton_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void OutputLog_TextChanged(object sender, EventArgs e)
         {
 
@@ -237,15 +240,21 @@ namespace SpreadsheetGUI
 
         private void ChangeFromConnectToLoad()
         {
-            ServerLabel.Text = "Connected";
-            IP_TextBox.ReadOnly = true;
-            Port_TextBox.ReadOnly = true;
-            ConnectButton.Visible = false;
-            NewSpreadsheetButton.Visible = true;
-            LoadSpreadsheetButton.Visible = true;
-            LoadFileTextBox.Visible = true;
+            this.Invoke(new MethodInvoker(() => ServerLabel.Text = "Connected"));
+            this.Invoke(new MethodInvoker(() => IP_TextBox.ReadOnly = true));
+            this.Invoke(new MethodInvoker(() => Port_TextBox.ReadOnly = true));
+            this.Invoke(new MethodInvoker(() => ConnectButton.Visible = false));
+            this.Invoke(new MethodInvoker(() => LoadSpreadsheetButton.Visible = true));
+            this.Invoke(new MethodInvoker(() => LoadFileTextBox.Visible = true));
             
         }
 
+        private void LoadSpreadsheetButton_Click(object sender, EventArgs e)
+        {
+            if (LoadFileTextBox.Text != string.Empty)
+                Model.Model.Load(LoadFileTextBox.Text);
+            else
+                MessageBox.Show("Please enter a spreadsheet to open or create.");
+        }
     }
 }

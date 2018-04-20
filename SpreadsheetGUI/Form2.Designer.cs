@@ -32,7 +32,6 @@
             this.ListOfSpreadSheetsBox = new System.Windows.Forms.ListBox();
             this.LoadSpreadsheetButton = new System.Windows.Forms.Button();
             this.LoadFileTextBox = new System.Windows.Forms.TextBox();
-            this.NewSpreadsheetButton = new System.Windows.Forms.Button();
             this.OutputLog = new System.Windows.Forms.RichTextBox();
             this.Port_Label = new System.Windows.Forms.Label();
             this.IP_Label = new System.Windows.Forms.Label();
@@ -50,7 +49,6 @@
             this.panel1.Controls.Add(this.ListOfSpreadSheetsBox);
             this.panel1.Controls.Add(this.LoadSpreadsheetButton);
             this.panel1.Controls.Add(this.LoadFileTextBox);
-            this.panel1.Controls.Add(this.NewSpreadsheetButton);
             this.panel1.Controls.Add(this.OutputLog);
             this.panel1.Controls.Add(this.Port_Label);
             this.panel1.Controls.Add(this.IP_Label);
@@ -75,13 +73,14 @@
             // LoadSpreadsheetButton
             // 
             this.LoadSpreadsheetButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LoadSpreadsheetButton.Location = new System.Drawing.Point(363, 455);
+            this.LoadSpreadsheetButton.Location = new System.Drawing.Point(493, 455);
             this.LoadSpreadsheetButton.Name = "LoadSpreadsheetButton";
             this.LoadSpreadsheetButton.Size = new System.Drawing.Size(124, 30);
             this.LoadSpreadsheetButton.TabIndex = 14;
             this.LoadSpreadsheetButton.Text = "Load";
             this.LoadSpreadsheetButton.UseVisualStyleBackColor = true;
             this.LoadSpreadsheetButton.Visible = false;
+            this.LoadSpreadsheetButton.Click += new System.EventHandler(this.LoadSpreadsheetButton_Click);
             // 
             // LoadFileTextBox
             // 
@@ -91,18 +90,6 @@
             this.LoadFileTextBox.Size = new System.Drawing.Size(352, 24);
             this.LoadFileTextBox.TabIndex = 13;
             this.LoadFileTextBox.Visible = false;
-            // 
-            // NewSpreadsheetButton
-            // 
-            this.NewSpreadsheetButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.NewSpreadsheetButton.Location = new System.Drawing.Point(493, 455);
-            this.NewSpreadsheetButton.Name = "NewSpreadsheetButton";
-            this.NewSpreadsheetButton.Size = new System.Drawing.Size(124, 30);
-            this.NewSpreadsheetButton.TabIndex = 12;
-            this.NewSpreadsheetButton.Text = "New";
-            this.NewSpreadsheetButton.UseVisualStyleBackColor = true;
-            this.NewSpreadsheetButton.Visible = false;
-            this.NewSpreadsheetButton.Click += new System.EventHandler(this.NewSpreadsheetButton_Click);
             // 
             // OutputLog
             // 
@@ -187,6 +174,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
             this.ClientSize = new System.Drawing.Size(774, 512);
             this.Controls.Add(this.panel1);
             this.Name = "Form2";
@@ -210,7 +198,6 @@
         private System.Windows.Forms.TextBox IP_TextBox;
         private System.Windows.Forms.TextBox Port_TextBox;
         private System.Windows.Forms.RichTextBox OutputLog;
-        private System.Windows.Forms.Button NewSpreadsheetButton;
         private System.Windows.Forms.Button LoadSpreadsheetButton;
         private System.Windows.Forms.TextBox LoadFileTextBox;
         private System.Windows.Forms.ListBox ListOfSpreadSheetsBox;

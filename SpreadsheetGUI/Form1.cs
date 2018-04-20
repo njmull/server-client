@@ -133,6 +133,7 @@ namespace SpreadsheetGUI
 
             ISet<String> altered = null;
             ISet<String> circular = null;
+            Model.Model.Edit(name, ContentField.Text);
 
             try
             {
@@ -250,42 +251,6 @@ namespace SpreadsheetGUI
         {
             EnterPressed(spreadsheetPanel1);
         }
-
-        //private void saveToolStripMenuItem_Click(object sender, EventArgs e)
-        //{
-        //    if (currFileName != null)
-        //    {
-        //        try
-        //        {
-        //            sheet.Save(currFileName);
-        //        }
-        //        catch (Exception exception)
-        //        {
-        //            MessageBox.Show("Unable to save Spreadsheet file: " + exception.Message);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        SaveFileDialog saveFileDialog1 = new SaveFileDialog();
-        //        saveFileDialog1.Filter = "Spreadsheet File|*.sprd|All Files|*";
-        //        saveFileDialog1.Title = "Save a Spreadsheet File";
-        //        saveFileDialog1.ShowDialog();
-
-        //        // If the file name is not an empty string open it for saving.  
-        //        if (saveFileDialog1.FileName != "")
-        //        {
-        //            try
-        //            {
-        //                sheet.Save(saveFileDialog1.FileName);
-        //                currFileName = saveFileDialog1.FileName;
-        //            }
-        //            catch (Exception exception)
-        //            {
-        //                MessageBox.Show("Unable to save Spreadsheet file: " + exception.Message);
-        //            }
-        //        }
-        //    }
-        //}
 
         private void ContentField_Validating(object sender, CancelEventArgs e)
         {
@@ -450,41 +415,33 @@ namespace SpreadsheetGUI
 
         private void UndoButton_Click(object sender, EventArgs e)
         {
-            //UndoPressed(spreadsheetPanel1);
+            Model.Model.Undo();
         }
 
         private void undoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //UndoPressed(spreadsheetPanel1);
+            Model.Model.Undo();
         }
 
         private void RevertButton_Click(object sender, EventArgs e)
         {
-            //RevertPressed(spreadsheetPanel1);
+            Model.Model.Revert(CellNameField.Text);
         }
 
         private void revertToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //RevertPressed(spreadsheetPanel1);
+            Model.Model.Revert(CellNameField.Text);
         }
 
         public void UpdateReceivedCellContents(string name, string value)
         {
-            int col = name.ElementAt(0) - 65;
-            int row = int.Parse(name.Substring(1)) - 1;
-
-            if (sheet.GetCellValue(name) is FormulaError err)
+            if (value != string.Empty)
             {
-                spreadsheetPanel1.SetValue(col, row, "FORMULA ERROR");
+                int col = name.ElementAt(0) - 65;
+                int row = int.Parse(name.Substring(1)) - 1;
+                sheet.SetContentsOfCell(name, value);
+                spreadsheetPanel1.SetValue(col, row, value);
             }
-            
-            if (sheet.GetCellCircularStatus(name) == true)
-            {
-                spreadsheetPanel1.SetValue(col, row, "#REF");
-            }
-            else
-                spreadsheetPanel1.SetValue(col, row, value + "");
-
         }
 
         private void ContentField_TextChanged(object sender, EventArgs e)
