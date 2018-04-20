@@ -191,6 +191,7 @@ namespace SpreadsheetGUI
             this.CellValueField.ReadOnly = true;
             this.CellValueField.Size = new System.Drawing.Size(149, 20);
             this.CellValueField.TabIndex = 7;
+            this.CellValueField.TextChanged += new System.EventHandler(this.CellValueField_TextChanged);
             // 
             // label1
             // 

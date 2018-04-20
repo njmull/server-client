@@ -18,6 +18,7 @@ namespace SpreadsheetGUI
     {
         AbstractSpreadsheet sheet;
         string currFileName = null;
+        bool isCircular = false;
         /// <summary>
         /// Constructor for the Spreadsheet.
         /// </summary>
@@ -65,16 +66,6 @@ namespace SpreadsheetGUI
 
             CellNameField.Text = (((Char)((65) + (col))) + "" + (row + 1));
 
-            //CS3505 changes///////////////////////////////////////////////////
-
-            //bool ifCircular = sheet.GetCellCircularStatus(CellNameField.Text);
-            //if (sheet.GetCellCircularStatus(CellNameField.Text) == true)
-            //{
-            //    ss.SetValue(col, row, "#REF");
-            //    CellValueField.Text = "#REF";
-            //}
-
-            //end//////////////////////////////////////////////////////////////
 
             if (sheet.GetCellValue(CellNameField.Text) is FormulaError err)
             {
@@ -88,10 +79,26 @@ namespace SpreadsheetGUI
                 CellValueField.Text = sheet.GetCellValue(CellNameField.Text) + "";
             }
 
-            if(sheet.GetCellContents(((Char)((65) + (col))) + "" + (row + 1)) is Formula form)
+
+
+            if (sheet.GetCellContents(((Char)((65) + (col))) + "" + (row + 1)) is Formula form)
                 ContentField.Text = "=" + sheet.GetCellContents(((Char)((65) + (col))) + "" + (row + 1));
             else
                 ContentField.Text = "" + sheet.GetCellContents(((Char)((65) + (col))) + "" + (row + 1));
+
+            //CS3505 changes///////////////////////////////////////////////////
+
+            //Checks to see if a circular dependency was found and display #REF in the selected cell on update if it was
+            if (isCircular == true)
+            {
+                ss.SetValue(col, row, "#REF");
+                CellValueField.Text = "#REF";
+                isCircular = false;
+            }
+
+            //end//////////////////////////////////////////////////////////////
+
+
 
             ContentField.Focus();
         }
@@ -131,13 +138,6 @@ namespace SpreadsheetGUI
                 altered = sheet.SetContentsOfCell(name, ContentField.Text);
                 circular = new HashSet<string>();
 
-                //foreach (String s in altered)
-                //{
-                //    updateCell(s, ss);
-                //}
-
-                //displaySelection(ss);
-
                 HashSet<string> visited = new HashSet<string>();
 
                 //CS 3505 changes ////////////////////////////////////
@@ -163,7 +163,20 @@ namespace SpreadsheetGUI
                 {
                     //sheet.SetCellCircularStatus(s, false);
                     updateCell(s, ss);
+                    //if (sheet.GetCellCircularStatus(s) == true)
+                    //    isCircular = true;
                 }
+
+                foreach (string c in circular)
+                {
+                    //if (sheet.GetCellCircularStatus(c) == true)
+                    //{
+                    //    isCircular = true;
+
+                    //}
+                    sheet.SetCellCircularStatus(c, false);
+                }
+
 
 
 
@@ -172,15 +185,17 @@ namespace SpreadsheetGUI
 
                 displaySelection(ss);
 
-                if (circStatus(circular) == true)
-                {
-                    altered.Remove(name);
-                    sheet.SetCellCircularStatus(name, true);
-                    altered.Add(name);
+                //isCircular = false;
+
+                //if (circStatus(circular) == true)
+                //{
+                //    altered.Remove(name);
+                //    sheet.SetCellCircularStatus(name, true);
+                //    altered.Add(name);
 
 
-                    updateCell(name, ss);
-                }
+                //    updateCell(name, ss);
+                //}
 
 
 
@@ -249,16 +264,16 @@ namespace SpreadsheetGUI
             {
                 if (cell.Equals(start))
                 {
-
+                    isCircular = true;
                     foreach (string c in sheet.GetDirectDependents(start))
                     {
                         sheet.SetCellCircularStatus(c, true);
                         altered.Add(c);
 
                     }
-                    altered.Remove(start);
+                    //altered.Remove(start);
                     sheet.SetCellCircularStatus(start, true);
-                    altered.Add(start);
+                    //altered.Add(start);
 
                 }
                 else if (!visited.Contains(cell))
@@ -552,6 +567,11 @@ namespace SpreadsheetGUI
         }
 
         private void spreadsheetPanel1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void CellValueField_TextChanged(object sender, EventArgs e)
         {
 
         }
