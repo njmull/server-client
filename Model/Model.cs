@@ -86,7 +86,7 @@ namespace Model
         // Inform the server that the client has left a cell
         public static void Unfocus()
         {
-            string msg = "focus ";
+            string msg = "unfocus ";
             msg += ctrlc;
             Network.Send(ss.theSocket, msg);
         }

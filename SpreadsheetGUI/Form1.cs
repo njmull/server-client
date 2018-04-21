@@ -19,6 +19,7 @@ namespace SpreadsheetGUI
         AbstractSpreadsheet sheet;
         string currFileName = null;
         bool isCircular = false;
+        public bool connected = false;
         /// <summary>
         /// Constructor for the Spreadsheet.
         /// </summary>
@@ -60,11 +61,16 @@ namespace SpreadsheetGUI
         {
             int row, col;
             String value;
-            
+            if (connected == true)
+                Model.Model.Unfocus();
+
             ss.GetSelection(out col, out row);
             ss.GetValue(col, row, out value);
 
             CellNameField.Text = (((Char)((65) + (col))) + "" + (row + 1));
+
+            if (connected == true)
+                Model.Model.Focus(CellNameField.Text);
 
 
             if (sheet.GetCellValue(CellNameField.Text) is FormulaError err)
@@ -435,13 +441,10 @@ namespace SpreadsheetGUI
 
         public void UpdateReceivedCellContents(string name, string value)
         {
-            if (value != string.Empty)
-            {
-                int col = name.ElementAt(0) - 65;
-                int row = int.Parse(name.Substring(1)) - 1;
-                sheet.SetContentsOfCell(name, value);
-                spreadsheetPanel1.SetValue(col, row, value);
-            }
+            int col = name.ElementAt(0) - 65;
+            int row = int.Parse(name.Substring(1)) - 1;
+            sheet.SetContentsOfCell(name, value);
+            spreadsheetPanel1.SetValue(col, row, value);
         }
 
         private void ContentField_TextChanged(object sender, EventArgs e)

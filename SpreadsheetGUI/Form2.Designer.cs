@@ -99,7 +99,6 @@
             this.OutputLog.Size = new System.Drawing.Size(276, 79);
             this.OutputLog.TabIndex = 11;
             this.OutputLog.Text = "";
-            this.OutputLog.TextChanged += new System.EventHandler(this.OutputLog_TextChanged);
             // 
             // Port_Label
             // 
