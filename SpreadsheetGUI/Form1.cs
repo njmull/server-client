@@ -446,6 +446,10 @@ namespace SpreadsheetGUI
             sheet.SetContentsOfCell(name, value);
             spreadsheetPanel1.SetValue(col, row, value);
         }
+        public void UpdateFocus(string cell, int id)
+        {
+            //spreadsheetPanel1.
+        }
 
         private void ContentField_TextChanged(object sender, EventArgs e)
         {

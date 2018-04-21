@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static Controller.Network;
 using SS;
+using System.Diagnostics;
 
 namespace SpreadsheetGUI
 {
@@ -36,11 +37,21 @@ namespace SpreadsheetGUI
                 // Display the new time left
                 // by updating the Time Left label.
                 timeLeft = timeLeft - 1;
+
+                if (timeLeft == 50)
+                    Model.Model.Ping();
+                if (timeLeft == 40)
+                    Model.Model.Ping();
+                if (timeLeft == 30)
+                    Model.Model.Ping();
+                if (timeLeft == 20)
+                    Model.Model.Ping();
+                if (timeLeft == 10)
+                    Model.Model.Ping();
             }
             else
             {
-                // If the user ran out of time, stop the timer, show
-                // a MessageBox, and fill in the answers.
+                // If the user ran out of time, stop the timer, show a message.
                 TimeoutClock.Stop();
                 MessageBox.Show("The server has timed out");
                 Model.Model.Disconnect();
@@ -60,7 +71,21 @@ namespace SpreadsheetGUI
                 return;
             }
 
-            theServer = Network.ConnectToServer(FirstContact,IP_TextBox.Text, Convert.ToInt32(Port_TextBox.Text));
+            bool connecting = false;
+            for (int i = 0; i < 1000; i++)
+            {
+                if (connecting == false)
+                {
+                    theServer = Network.ConnectToServer(FirstContact, IP_TextBox.Text, Convert.ToInt32(Port_TextBox.Text));
+                    connecting = true;
+                }
+                if (connected == true)
+                    break;
+                System.Threading.Thread.Sleep(10);
+            }
+           
+            if (connected == false)
+                MessageBox.Show("Unable to connect to server");
 
 
             //this.Focus();
@@ -208,8 +233,9 @@ namespace SpreadsheetGUI
                     string temp = cmd.Substring(cmd.IndexOf(' ') + 1);
                     string[] pairs = temp.Split(':');
                     string cell = pairs[0];
-                    string value = pairs[1];
-                    //Focus(cell, value);
+                    string name = pairs[1];
+                    int id = Int32.Parse(name);
+                    Program.MainForm.UpdateFocus(cell, id);
                 }
             }
 
