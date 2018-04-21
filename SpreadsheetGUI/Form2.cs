@@ -74,7 +74,7 @@ namespace SpreadsheetGUI
             TimeoutClock = new Timer();
             TimeoutClock.Tick += new EventHandler(TimeoutClock_Tick);
             TimeoutClock.Interval = 1000; // 1 second
-            TimeoutClock.Start();
+            this.Invoke(new MethodInvoker(() => TimeoutClock.Start()));
             // Change the action that is take when a network event occurs. Now when data is received,
             // the Networking library will invoke ProcessMessage (see below)
             state.callMe = ProcessMessage;
@@ -175,9 +175,11 @@ namespace SpreadsheetGUI
             if (cmd.Contains("full_state "))
             {
                 string temp = cmd.Substring(cmd.IndexOf(' ') + 1);
-                string[] sheets = Regex.Split(temp, "\n");
+                string[] sheets = Regex.Split(temp, "\n");             
                 foreach(string s in sheets)
                 {
+                    if (s == string.Empty)
+                        break;
                     string[] pairs = s.Split(':');
                     string cell = pairs[0];
                     string value = pairs[1];
@@ -201,21 +203,23 @@ namespace SpreadsheetGUI
             // <user_id> is in the process of editing the specified cell.
             if (cmd.Contains("focus "))
             {
-                string temp = cmd.Substring(cmd.IndexOf(' ') + 1);
-                string[] pairs = temp.Split(':');
-                string cell = pairs[0];
-                string value = pairs[1];
-                //Focus(cell, value);
+                if (cmd.Contains("unfocus ") != true)
+                {
+                    string temp = cmd.Substring(cmd.IndexOf(' ') + 1);
+                    string[] pairs = temp.Split(':');
+                    string cell = pairs[0];
+                    string value = pairs[1];
+                    //Focus(cell, value);
+                }
             }
 
             // Notify clients that a user, represented by a unique string
             // <user_id> is no longer in the process of
-            if (cmd.Contains("unfocus "))
+            if (cmd.Contains("un"))
             {
                 string temp = cmd.Substring(cmd.IndexOf(' ') + 1);
                 string[] pairs = temp.Split(':');
-                string cell = pairs[0];
-                string value = pairs[1];
+ 
                 //unFocus(cell, value);
             }
         }
@@ -233,11 +237,6 @@ namespace SpreadsheetGUI
             this.Close();
         }
 
-        private void OutputLog_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void ChangeFromConnectToLoad()
         {
             this.Invoke(new MethodInvoker(() => ServerLabel.Text = "Connected"));
@@ -246,7 +245,8 @@ namespace SpreadsheetGUI
             this.Invoke(new MethodInvoker(() => ConnectButton.Visible = false));
             this.Invoke(new MethodInvoker(() => LoadSpreadsheetButton.Visible = true));
             this.Invoke(new MethodInvoker(() => LoadFileTextBox.Visible = true));
-            
+            connected = true;
+            Program.MainForm.connected = true;
         }
 
         private void LoadSpreadsheetButton_Click(object sender, EventArgs e)
