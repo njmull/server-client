@@ -38,7 +38,6 @@ namespace SpreadsheetGUI
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.revertToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.spreadsheetPanel1 = new SS.SpreadsheetPanel();
             this.ContentField = new System.Windows.Forms.TextBox();
             this.CellNameField = new System.Windows.Forms.TextBox();
             this.EnterButton = new System.Windows.Forms.Button();
@@ -49,6 +48,7 @@ namespace SpreadsheetGUI
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.RevertButton = new System.Windows.Forms.Button();
             this.UndoButton = new System.Windows.Forms.Button();
+            this.spreadsheetPanel1 = new SS.SpreadsheetPanel();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -110,28 +110,16 @@ namespace SpreadsheetGUI
             // undoToolStripMenuItem
             // 
             this.undoToolStripMenuItem.Name = "undoToolStripMenuItem";
-            this.undoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.undoToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.undoToolStripMenuItem.Text = "Undo";
             this.undoToolStripMenuItem.Click += new System.EventHandler(this.undoToolStripMenuItem_Click);
             // 
             // revertToolStripMenuItem
             // 
             this.revertToolStripMenuItem.Name = "revertToolStripMenuItem";
-            this.revertToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.revertToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.revertToolStripMenuItem.Text = "Revert";
             this.revertToolStripMenuItem.Click += new System.EventHandler(this.revertToolStripMenuItem_Click);
-            // 
-            // spreadsheetPanel1
-            // 
-            this.spreadsheetPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.spreadsheetPanel1.Location = new System.Drawing.Point(0, 0);
-            this.spreadsheetPanel1.Margin = new System.Windows.Forms.Padding(3, 78, 3, 3);
-            this.spreadsheetPanel1.Name = "spreadsheetPanel1";
-            this.spreadsheetPanel1.Size = new System.Drawing.Size(754, 451);
-            this.spreadsheetPanel1.TabIndex = 0;
-            this.spreadsheetPanel1.TabStop = false;
-            this.spreadsheetPanel1.Load += new System.EventHandler(this.spreadsheetPanel1_Load);
-            this.spreadsheetPanel1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.spreadsheetPanel1_KeyDown);
             // 
             // ContentField
             // 
@@ -254,6 +242,19 @@ namespace SpreadsheetGUI
             this.UndoButton.Text = "Undo";
             this.UndoButton.UseVisualStyleBackColor = true;
             this.UndoButton.Click += new System.EventHandler(this.UndoButton_Click);
+            // 
+            // spreadsheetPanel1
+            // 
+            this.spreadsheetPanel1.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
+            this.spreadsheetPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.spreadsheetPanel1.Location = new System.Drawing.Point(0, 0);
+            this.spreadsheetPanel1.Margin = new System.Windows.Forms.Padding(3, 78, 3, 3);
+            this.spreadsheetPanel1.Name = "spreadsheetPanel1";
+            this.spreadsheetPanel1.Size = new System.Drawing.Size(754, 451);
+            this.spreadsheetPanel1.TabIndex = 0;
+            this.spreadsheetPanel1.TabStop = false;
+            this.spreadsheetPanel1.Load += new System.EventHandler(this.spreadsheetPanel1_Load);
+            this.spreadsheetPanel1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.spreadsheetPanel1_KeyDown);
             // 
             // Form1
             // 

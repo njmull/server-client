@@ -265,7 +265,7 @@ namespace SpreadsheetGUI
 
         private void ContentField_Validating(object sender, CancelEventArgs e)
         {
-            EnterPressed(spreadsheetPanel1);
+            //EnterPressed(spreadsheetPanel1);
         }
 
         private void ContentField_KeyDown(object sender, KeyEventArgs e)
