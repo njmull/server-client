@@ -20,6 +20,9 @@ namespace SpreadsheetGUI
         string currFileName = null;
         bool isCircular = false;
         public bool connected = false;
+
+        //public Dictionary<int, >
+
         /// <summary>
         /// Constructor for the Spreadsheet.
         /// </summary>
