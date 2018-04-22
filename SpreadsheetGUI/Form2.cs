@@ -54,7 +54,10 @@ namespace SpreadsheetGUI
                 // If the user ran out of time, stop the timer, show a message.
                 TimeoutClock.Stop();
                 MessageBox.Show("The server has timed out");
+                connected = false;
+                Program.MainForm.connected = false;
                 Model.Model.Disconnect();
+                SetWindowStates();
             }
         }
 
@@ -103,10 +106,6 @@ namespace SpreadsheetGUI
             // Change the action that is take when a network event occurs. Now when data is received,
             // the Networking library will invoke ProcessMessage (see below)
             state.callMe = ProcessMessage;
-
-            // If this was the SpaceWars game, there would be one more step of the handshake, and we wouldn't
-            // go straight in to ProcessMessage
-
             Network.GetData(state);
         }
 
@@ -163,23 +162,21 @@ namespace SpreadsheetGUI
                     ChangeFromConnectToLoad();
                 }
                 catch { }
-                //ChangeFromConnectToLoad();
-
-
-                // request to load/create the selected sheet
-                //Network.Send(theServer,selected)
+                cmd = string.Empty;
             }
 
             // Unable to open or create the requested spreadsheet 
             if (cmd.Contains("file_load_error "))
             {
                 MessageBox.Show("There was an error loading the requested file");
+                cmd = string.Empty;
             }
 
             // Disconnect the client receiving the message
             if (cmd.Contains("disconnect "))
             {
                 connected = false;
+                cmd = string.Empty;
                 Disconnect();
             }
 
@@ -187,6 +184,7 @@ namespace SpreadsheetGUI
             if (cmd.Contains("ping "))
             {
                 Respond();
+                cmd = string.Empty;
             }
 
             // Server response to ping from the client
@@ -194,6 +192,7 @@ namespace SpreadsheetGUI
             {
                 //reset our timeout timer, whereever that may be
                 timeLeft = 60;
+                cmd = string.Empty;
             }
 
             // The full state of the spreadsheet, with the id and contents of every non-empty cell
@@ -210,6 +209,7 @@ namespace SpreadsheetGUI
                     string value = pairs[1];
                     UpdateCell(cell, value);
                 }
+                cmd = string.Empty;
             }
 
             // Notification that the contents of <cell_id> is now <cell_contents>, 
@@ -221,6 +221,7 @@ namespace SpreadsheetGUI
                 string cell = pairs[0];
                 string value = pairs[1];
                 this.Invoke(new MethodInvoker(() => UpdateCell(cell, value)));
+                cmd = string.Empty;
 
             }
 
@@ -236,6 +237,7 @@ namespace SpreadsheetGUI
                     string name = pairs[1];
                     int id = Int32.Parse(name);
                     Program.MainForm.UpdateFocus(cell, id);
+                    cmd = string.Empty;
                 }
             }
 
@@ -244,9 +246,9 @@ namespace SpreadsheetGUI
             if (cmd.Contains("un"))
             {
                 string temp = cmd.Substring(cmd.IndexOf(' ') + 1);
-                string[] pairs = temp.Split(':');
- 
-                //unFocus(cell, value);
+                int id = Int32.Parse(temp);
+                Program.MainForm.Unfocus(id);
+                cmd = string.Empty;
             }
         }
 
@@ -278,9 +280,33 @@ namespace SpreadsheetGUI
         private void LoadSpreadsheetButton_Click(object sender, EventArgs e)
         {
             if (LoadFileTextBox.Text != string.Empty)
+            {
                 Model.Model.Load(LoadFileTextBox.Text);
+                SetWindowStates();
+            }
             else
                 MessageBox.Show("Please enter a spreadsheet to open or create.");
+        }
+        
+        public void SetWindowStates()
+        {
+            if(connected == true)
+            {
+                Program.MainForm.Enabled = true;
+                this.Invoke(new MethodInvoker(() => Program.MainForm.WindowState = FormWindowState.Normal));
+                Program.MainForm.Show();
+                Program.MainForm.Focus();
+                this.WindowState = FormWindowState.Minimized;
+                this.Hide();
+                this.Enabled = false;
+            }
+            if(connected == false)
+            {
+                this.WindowState = FormWindowState.Normal;
+                this.Show();
+                this.Enabled = true;
+            }
+
         }
     }
 }

@@ -37,6 +37,7 @@ namespace SpreadsheetGUI
 
             spreadsheetPanel1.SetSelection(0, 0);
             displaySelection(spreadsheetPanel1);
+            this.Hide();
 
         }
 
@@ -64,6 +65,7 @@ namespace SpreadsheetGUI
         {
             int row, col;
             String value;
+
             if (connected == true)
                 Model.Model.Unfocus();
 
@@ -413,7 +415,8 @@ namespace SpreadsheetGUI
                 {
                     // Add disconnect functionality...  disconnect();
                     e.Cancel = false;
-                    MessageBox.Show("Disconnected (still needs implemented)");
+                    connected = false;
+                    Program.ConnectForm.Close();
                 }
                 else if (result == DialogResult.No)
                     e.Cancel = false;
@@ -451,7 +454,14 @@ namespace SpreadsheetGUI
         }
         public void UpdateFocus(string cell, int id)
         {
-            //spreadsheetPanel1.
+            int col = cell.ElementAt(0) - 65;
+            int row = int.Parse(cell.Substring(1)) - 1;
+            spreadsheetPanel1.AddFocus(id, col, row);
+        }
+
+        public void Unfocus(int id)
+        {
+            spreadsheetPanel1.RemoveFocus(id);
         }
 
         private void ContentField_TextChanged(object sender, EventArgs e)
