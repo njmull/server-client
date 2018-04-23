@@ -21,7 +21,6 @@ namespace SpreadsheetGUI
         bool isCircular = false;
         public bool connected = false;
 
-        //public Dictionary<int, >
 
         /// <summary>
         /// Constructor for the Spreadsheet.
