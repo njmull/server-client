@@ -296,9 +296,9 @@ namespace SpreadsheetGUI
                 this.Invoke(new MethodInvoker(() => Program.MainForm.WindowState = FormWindowState.Normal));
                 Program.MainForm.Show();
                 Program.MainForm.Focus();
-                this.WindowState = FormWindowState.Minimized;
-                this.Hide();
-                this.Enabled = false;
+                //this.WindowState = FormWindowState.Minimized;
+                //this.Hide();
+                //this.Enabled = false;
             }
             if(connected == false)
             {
