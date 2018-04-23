@@ -69,6 +69,14 @@
             <param name="col"></param>
             <param name="row"></param>
         </member>
+        <member name="M:SS.SpreadsheetPanel.GetFirstSelection(System.Int32@,System.Int32@)">
+            <summary>
+            Assigns the column and row of the upper left most column and row
+            to the out parameters.
+            </summary>
+            <param name="col"></param>
+            <param name="row"></param>
+        </member>
         <member name="M:SS.SpreadsheetPanel.OnResize(System.EventArgs)">
             <summary>
             When the SpreadsheetPanel is resized, we set the size and locations of the three
