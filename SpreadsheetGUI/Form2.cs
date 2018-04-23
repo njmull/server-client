@@ -91,6 +91,7 @@ namespace SpreadsheetGUI
                 MessageBox.Show("Unable to connect to server");
 
 
+
             //this.Focus();
             //this.Hide();
         }
@@ -263,6 +264,8 @@ namespace SpreadsheetGUI
 
         private void ExitButton_Click(object sender, EventArgs e)
         {
+            connected = false;
+            Program.MainForm.Close();
             this.Close();
         }
 
@@ -275,6 +278,11 @@ namespace SpreadsheetGUI
             this.Invoke(new MethodInvoker(() => LoadSpreadsheetButton.Visible = true));
             this.Invoke(new MethodInvoker(() => LoadFileTextBox.Visible = true));
             this.Invoke(new MethodInvoker(() => ListOfSpreadSheetsBox.Visible = true));
+            this.Invoke(new MethodInvoker(() => IP_TextBox.TabStop = false));
+            this.Invoke(new MethodInvoker(() => Port_TextBox.TabStop = false));
+            this.Invoke(new MethodInvoker(() => LoadFileTextBox.Focus()));
+
+
             connected = true;
             Program.MainForm.connected = true;
         }
@@ -309,6 +317,15 @@ namespace SpreadsheetGUI
                 this.Enabled = true;
             }
 
+        }
+
+        private void ListOfSpreadSheetsBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string curItem = ListOfSpreadSheetsBox.SelectedItem.ToString();
+            
+            string curItemTrimmed = curItem.Trim();
+
+            LoadFileTextBox.Text = curItemTrimmed;
         }
     }
 }

@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.OutputLog = new System.Windows.Forms.RichTextBox();
             this.ListOfSpreadSheetsBox = new System.Windows.Forms.ListBox();
             this.LoadSpreadsheetButton = new System.Windows.Forms.Button();
             this.LoadFileTextBox = new System.Windows.Forms.TextBox();
-            this.OutputLog = new System.Windows.Forms.RichTextBox();
             this.Port_Label = new System.Windows.Forms.Label();
             this.IP_Label = new System.Windows.Forms.Label();
             this.IP_TextBox = new System.Windows.Forms.TextBox();
@@ -62,6 +62,16 @@
             this.panel1.Size = new System.Drawing.Size(750, 488);
             this.panel1.TabIndex = 0;
             // 
+            // OutputLog
+            // 
+            this.OutputLog.Location = new System.Drawing.Point(471, 277);
+            this.OutputLog.Margin = new System.Windows.Forms.Padding(2);
+            this.OutputLog.Name = "OutputLog";
+            this.OutputLog.Size = new System.Drawing.Size(276, 79);
+            this.OutputLog.TabIndex = 11;
+            this.OutputLog.Text = "";
+            this.OutputLog.Visible = false;
+            // 
             // ListOfSpreadSheetsBox
             // 
             this.ListOfSpreadSheetsBox.FormattingEnabled = true;
@@ -69,7 +79,9 @@
             this.ListOfSpreadSheetsBox.Name = "ListOfSpreadSheetsBox";
             this.ListOfSpreadSheetsBox.Size = new System.Drawing.Size(742, 264);
             this.ListOfSpreadSheetsBox.TabIndex = 15;
+            this.ListOfSpreadSheetsBox.TabStop = false;
             this.ListOfSpreadSheetsBox.Visible = false;
+            this.ListOfSpreadSheetsBox.SelectedIndexChanged += new System.EventHandler(this.ListOfSpreadSheetsBox_SelectedIndexChanged);
             // 
             // LoadSpreadsheetButton
             // 
@@ -77,7 +89,7 @@
             this.LoadSpreadsheetButton.Location = new System.Drawing.Point(493, 455);
             this.LoadSpreadsheetButton.Name = "LoadSpreadsheetButton";
             this.LoadSpreadsheetButton.Size = new System.Drawing.Size(124, 30);
-            this.LoadSpreadsheetButton.TabIndex = 14;
+            this.LoadSpreadsheetButton.TabIndex = 8;
             this.LoadSpreadsheetButton.Text = "Load";
             this.LoadSpreadsheetButton.UseVisualStyleBackColor = true;
             this.LoadSpreadsheetButton.Visible = false;
@@ -89,18 +101,8 @@
             this.LoadFileTextBox.Location = new System.Drawing.Point(5, 458);
             this.LoadFileTextBox.Name = "LoadFileTextBox";
             this.LoadFileTextBox.Size = new System.Drawing.Size(352, 24);
-            this.LoadFileTextBox.TabIndex = 13;
+            this.LoadFileTextBox.TabIndex = 7;
             this.LoadFileTextBox.Visible = false;
-            // 
-            // OutputLog
-            // 
-            this.OutputLog.Location = new System.Drawing.Point(471, 277);
-            this.OutputLog.Margin = new System.Windows.Forms.Padding(2);
-            this.OutputLog.Name = "OutputLog";
-            this.OutputLog.Size = new System.Drawing.Size(276, 79);
-            this.OutputLog.TabIndex = 11;
-            this.OutputLog.Text = "";
-            this.OutputLog.Visible = false;
             // 
             // Port_Label
             // 
@@ -144,7 +146,7 @@
             this.ExitButton.Location = new System.Drawing.Point(623, 455);
             this.ExitButton.Name = "ExitButton";
             this.ExitButton.Size = new System.Drawing.Size(124, 30);
-            this.ExitButton.TabIndex = 4;
+            this.ExitButton.TabIndex = 6;
             this.ExitButton.Text = "Exit";
             this.ExitButton.UseVisualStyleBackColor = true;
             this.ExitButton.Click += new System.EventHandler(this.ExitButton_Click);

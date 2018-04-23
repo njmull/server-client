@@ -22,7 +22,7 @@ namespace SpreadsheetGUI
         bool isCircular = false;
         public bool connected = false;
         private const int DATA_COL_WIDTH = 80;
-        private const int DATA_ROW_HEIGHT = 20;
+        private const int DATA_ROW_HEIGHT = 22;
         private const int LABEL_COL_WIDTH = 30;
         private const int LABEL_ROW_HEIGHT = 30;
         private const int PADDING = 2;
@@ -51,7 +51,6 @@ namespace SpreadsheetGUI
             ContentField.BringToFront();
             ContentField.Focus();
             this.Hide();
-
         }
 
         public Form1(Spreadsheet sheet)
@@ -72,6 +71,8 @@ namespace SpreadsheetGUI
             spreadsheetPanel1.Focus();
             ContentField.BringToFront();
             ContentField.Focus();
+
+            
 
         }
 
@@ -162,11 +163,15 @@ namespace SpreadsheetGUI
         // Deals with the Close menu
         private void closeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (sheet.Changed == true)
+
+
+            if (MessageBox.Show("Do you want to disconnect and exit?", "Spreadsheet", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                if (MessageBox.Show("You have unsaved changes, do you want to exit?", "Spreadsheet", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                    Close();
+                connected = false;
+                Program.ConnectForm.Close();
+                Close();
             }
+            
 
         }
 
@@ -473,7 +478,7 @@ namespace SpreadsheetGUI
             if (sheet.Changed == true)
             {
                 //DialogResult result = MessageBox.Show("You have unsaved changes, do you want to save?", "Spreadsheet", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                DialogResult result = MessageBox.Show("Do you want to disconnect and exit?", "Spreadsheet", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                DialogResult result = MessageBox.Show("Do you want to disconnect and exit?", "Spreadsheet", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
 
                 if (result == DialogResult.Yes)
@@ -484,9 +489,9 @@ namespace SpreadsheetGUI
                     Program.ConnectForm.Close();
                 }
                 else if (result == DialogResult.No)
-                    e.Cancel = false;
-                else
                     e.Cancel = true;
+                //else
+                //    e.Cancel = true;
             }
         }
 
@@ -540,6 +545,11 @@ namespace SpreadsheetGUI
         }
 
         private void CellValueField_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
         {
 
         }

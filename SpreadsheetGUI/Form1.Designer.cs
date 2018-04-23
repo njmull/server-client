@@ -46,9 +46,9 @@ namespace SpreadsheetGUI
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.ContentsBar = new System.Windows.Forms.TextBox();
             this.RevertButton = new System.Windows.Forms.Button();
             this.UndoButton = new System.Windows.Forms.Button();
-            this.ContentsBar = new System.Windows.Forms.TextBox();
             this.spreadsheetPanel1 = new SS.SpreadsheetPanel();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -126,7 +126,7 @@ namespace SpreadsheetGUI
             // 
             this.ContentField.Location = new System.Drawing.Point(30, 31);
             this.ContentField.Name = "ContentField";
-            this.ContentField.Size = new System.Drawing.Size(76, 20);
+            this.ContentField.Size = new System.Drawing.Size(78, 20);
             this.ContentField.TabIndex = 0;
             this.ContentField.TabStop = false;
             this.ContentField.TextChanged += new System.EventHandler(this.ContentField_TextChanged);
@@ -225,6 +225,15 @@ namespace SpreadsheetGUI
             this.splitContainer1.TabIndex = 11;
             this.splitContainer1.TabStop = false;
             // 
+            // ContentsBar
+            // 
+            this.ContentsBar.Enabled = false;
+            this.ContentsBar.Location = new System.Drawing.Point(185, 65);
+            this.ContentsBar.Name = "ContentsBar";
+            this.ContentsBar.ReadOnly = true;
+            this.ContentsBar.Size = new System.Drawing.Size(149, 20);
+            this.ContentsBar.TabIndex = 13;
+            // 
             // RevertButton
             // 
             this.RevertButton.Location = new System.Drawing.Point(518, 65);
@@ -244,15 +253,6 @@ namespace SpreadsheetGUI
             this.UndoButton.Text = "Undo";
             this.UndoButton.UseVisualStyleBackColor = true;
             this.UndoButton.Click += new System.EventHandler(this.UndoButton_Click);
-            // 
-            // ContentsBar
-            // 
-            this.ContentsBar.Enabled = false;
-            this.ContentsBar.Location = new System.Drawing.Point(185, 65);
-            this.ContentsBar.Name = "ContentsBar";
-            this.ContentsBar.ReadOnly = true;
-            this.ContentsBar.Size = new System.Drawing.Size(149, 20);
-            this.ContentsBar.TabIndex = 13;
             // 
             // spreadsheetPanel1
             // 
@@ -281,6 +281,7 @@ namespace SpreadsheetGUI
             this.Text = "SpreadSheet";
             this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
