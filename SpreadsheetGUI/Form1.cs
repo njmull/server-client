@@ -36,6 +36,7 @@ namespace SpreadsheetGUI
 
             spreadsheetPanel1.SetSelection(0, 0);
             displaySelection(spreadsheetPanel1);
+            spreadsheetPanel1.SendToBack();
             this.Hide();
 
         }

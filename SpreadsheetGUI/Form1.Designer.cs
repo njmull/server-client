@@ -49,6 +49,7 @@ namespace SpreadsheetGUI
             this.RevertButton = new System.Windows.Forms.Button();
             this.UndoButton = new System.Windows.Forms.Button();
             this.spreadsheetPanel1 = new SS.SpreadsheetPanel();
+            this.ContentsBar = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -123,9 +124,9 @@ namespace SpreadsheetGUI
             // 
             // ContentField
             // 
-            this.ContentField.Location = new System.Drawing.Point(185, 68);
+            this.ContentField.Location = new System.Drawing.Point(30, 31);
             this.ContentField.Name = "ContentField";
-            this.ContentField.Size = new System.Drawing.Size(149, 20);
+            this.ContentField.Size = new System.Drawing.Size(86, 20);
             this.ContentField.TabIndex = 0;
             this.ContentField.TabStop = false;
             this.ContentField.TextChanged += new System.EventHandler(this.ContentField_TextChanged);
@@ -204,12 +205,12 @@ namespace SpreadsheetGUI
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.ContentsBar);
             this.splitContainer1.Panel1.Controls.Add(this.RevertButton);
             this.splitContainer1.Panel1.Controls.Add(this.UndoButton);
             this.splitContainer1.Panel1.Controls.Add(this.label3);
             this.splitContainer1.Panel1.Controls.Add(this.CellNameField);
             this.splitContainer1.Panel1.Controls.Add(this.label2);
-            this.splitContainer1.Panel1.Controls.Add(this.ContentField);
             this.splitContainer1.Panel1.Controls.Add(this.EnterButton);
             this.splitContainer1.Panel1.Controls.Add(this.CellValueField);
             this.splitContainer1.Panel1MinSize = 0;
@@ -217,6 +218,7 @@ namespace SpreadsheetGUI
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.spreadsheetPanel1);
+            this.splitContainer1.Panel2.Controls.Add(this.ContentField);
             this.splitContainer1.Size = new System.Drawing.Size(754, 553);
             this.splitContainer1.SplitterDistance = 100;
             this.splitContainer1.SplitterWidth = 2;
@@ -256,6 +258,15 @@ namespace SpreadsheetGUI
             this.spreadsheetPanel1.Load += new System.EventHandler(this.spreadsheetPanel1_Load);
             this.spreadsheetPanel1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.spreadsheetPanel1_KeyDown);
             // 
+            // ContentsBar
+            // 
+            this.ContentsBar.Enabled = false;
+            this.ContentsBar.Location = new System.Drawing.Point(185, 65);
+            this.ContentsBar.Name = "ContentsBar";
+            this.ContentsBar.ReadOnly = true;
+            this.ContentsBar.Size = new System.Drawing.Size(149, 20);
+            this.ContentsBar.TabIndex = 13;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -275,6 +286,7 @@ namespace SpreadsheetGUI
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
+            this.splitContainer1.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -302,6 +314,7 @@ namespace SpreadsheetGUI
         private System.Windows.Forms.ToolStripMenuItem revertToolStripMenuItem;
         private System.Windows.Forms.Button RevertButton;
         private System.Windows.Forms.Button UndoButton;
+        private System.Windows.Forms.TextBox ContentsBar;
     }
 }
 
