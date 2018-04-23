@@ -46,10 +46,10 @@
             // panel1
             // 
             this.panel1.AutoSize = true;
+            this.panel1.Controls.Add(this.OutputLog);
             this.panel1.Controls.Add(this.ListOfSpreadSheetsBox);
             this.panel1.Controls.Add(this.LoadSpreadsheetButton);
             this.panel1.Controls.Add(this.LoadFileTextBox);
-            this.panel1.Controls.Add(this.OutputLog);
             this.panel1.Controls.Add(this.Port_Label);
             this.panel1.Controls.Add(this.IP_Label);
             this.panel1.Controls.Add(this.IP_TextBox);
@@ -67,8 +67,9 @@
             this.ListOfSpreadSheetsBox.FormattingEnabled = true;
             this.ListOfSpreadSheetsBox.Location = new System.Drawing.Point(5, 180);
             this.ListOfSpreadSheetsBox.Name = "ListOfSpreadSheetsBox";
-            this.ListOfSpreadSheetsBox.Size = new System.Drawing.Size(352, 264);
+            this.ListOfSpreadSheetsBox.Size = new System.Drawing.Size(742, 264);
             this.ListOfSpreadSheetsBox.TabIndex = 15;
+            this.ListOfSpreadSheetsBox.Visible = false;
             // 
             // LoadSpreadsheetButton
             // 
@@ -99,6 +100,7 @@
             this.OutputLog.Size = new System.Drawing.Size(276, 79);
             this.OutputLog.TabIndex = 11;
             this.OutputLog.Text = "";
+            this.OutputLog.Visible = false;
             // 
             // Port_Label
             // 
@@ -116,9 +118,9 @@
             this.IP_Label.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.IP_Label.Location = new System.Drawing.Point(47, 96);
             this.IP_Label.Name = "IP_Label";
-            this.IP_Label.Size = new System.Drawing.Size(79, 16);
+            this.IP_Label.Size = new System.Drawing.Size(88, 16);
             this.IP_Label.TabIndex = 9;
-            this.IP_Label.Text = "IP Adress:";
+            this.IP_Label.Text = "IP Address:";
             // 
             // IP_TextBox
             // 

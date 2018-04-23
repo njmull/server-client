@@ -48,8 +48,8 @@ namespace SpreadsheetGUI
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.RevertButton = new System.Windows.Forms.Button();
             this.UndoButton = new System.Windows.Forms.Button();
-            this.spreadsheetPanel1 = new SS.SpreadsheetPanel();
             this.ContentsBar = new System.Windows.Forms.TextBox();
+            this.spreadsheetPanel1 = new SS.SpreadsheetPanel();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -126,7 +126,7 @@ namespace SpreadsheetGUI
             // 
             this.ContentField.Location = new System.Drawing.Point(30, 31);
             this.ContentField.Name = "ContentField";
-            this.ContentField.Size = new System.Drawing.Size(86, 20);
+            this.ContentField.Size = new System.Drawing.Size(76, 20);
             this.ContentField.TabIndex = 0;
             this.ContentField.TabStop = false;
             this.ContentField.TextChanged += new System.EventHandler(this.ContentField_TextChanged);
@@ -245,6 +245,15 @@ namespace SpreadsheetGUI
             this.UndoButton.UseVisualStyleBackColor = true;
             this.UndoButton.Click += new System.EventHandler(this.UndoButton_Click);
             // 
+            // ContentsBar
+            // 
+            this.ContentsBar.Enabled = false;
+            this.ContentsBar.Location = new System.Drawing.Point(185, 65);
+            this.ContentsBar.Name = "ContentsBar";
+            this.ContentsBar.ReadOnly = true;
+            this.ContentsBar.Size = new System.Drawing.Size(149, 20);
+            this.ContentsBar.TabIndex = 13;
+            // 
             // spreadsheetPanel1
             // 
             this.spreadsheetPanel1.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
@@ -257,15 +266,6 @@ namespace SpreadsheetGUI
             this.spreadsheetPanel1.TabStop = false;
             this.spreadsheetPanel1.Load += new System.EventHandler(this.spreadsheetPanel1_Load);
             this.spreadsheetPanel1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.spreadsheetPanel1_KeyDown);
-            // 
-            // ContentsBar
-            // 
-            this.ContentsBar.Enabled = false;
-            this.ContentsBar.Location = new System.Drawing.Point(185, 65);
-            this.ContentsBar.Name = "ContentsBar";
-            this.ContentsBar.ReadOnly = true;
-            this.ContentsBar.Size = new System.Drawing.Size(149, 20);
-            this.ContentsBar.TabIndex = 13;
             // 
             // Form1
             // 

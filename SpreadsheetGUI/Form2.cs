@@ -123,11 +123,12 @@ namespace SpreadsheetGUI
             {
                 Receive(p);
 
-                try
-                {
-                    this.Invoke(new MethodInvoker(() => OutputLog.AppendText(p)));
-                }
-                catch { }
+                // Output log window for debugging.
+                //try
+                //{
+                //    this.Invoke(new MethodInvoker(() => OutputLog.AppendText(p)));
+                //}
+                //catch { }
 
                 // Then remove the processed message from the SocketState's growable buffer
                 state.sb.Remove(0, p.Length);
@@ -273,6 +274,7 @@ namespace SpreadsheetGUI
             this.Invoke(new MethodInvoker(() => ConnectButton.Visible = false));
             this.Invoke(new MethodInvoker(() => LoadSpreadsheetButton.Visible = true));
             this.Invoke(new MethodInvoker(() => LoadFileTextBox.Visible = true));
+            this.Invoke(new MethodInvoker(() => ListOfSpreadSheetsBox.Visible = true));
             connected = true;
             Program.MainForm.connected = true;
         }
@@ -296,9 +298,9 @@ namespace SpreadsheetGUI
                 this.Invoke(new MethodInvoker(() => Program.MainForm.WindowState = FormWindowState.Normal));
                 Program.MainForm.Show();
                 Program.MainForm.Focus();
-                //this.WindowState = FormWindowState.Minimized;
-                //this.Hide();
-                //this.Enabled = false;
+                this.WindowState = FormWindowState.Minimized;
+                this.Hide();
+                this.Enabled = false;
             }
             if(connected == false)
             {

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using SS;
 using SpreadsheetUtilities;
+using System.Diagnostics;
 
 namespace SpreadsheetGUI
 {
@@ -20,6 +21,15 @@ namespace SpreadsheetGUI
         string currFileName = null;
         bool isCircular = false;
         public bool connected = false;
+        private const int DATA_COL_WIDTH = 80;
+        private const int DATA_ROW_HEIGHT = 20;
+        private const int LABEL_COL_WIDTH = 30;
+        private const int LABEL_ROW_HEIGHT = 30;
+        private const int PADDING = 2;
+        private const int SCROLLBAR_WIDTH = 20;
+        private const int COL_COUNT = 26;
+        private const int ROW_COUNT = 99;
+        Stopwatch Stopwatch = new Stopwatch();
 
 
         /// <summary>
@@ -33,10 +43,13 @@ namespace SpreadsheetGUI
             spreadsheetPanel1.SelectionChanged += displaySelection;
 
             
-
+            
             spreadsheetPanel1.SetSelection(0, 0);
             displaySelection(spreadsheetPanel1);
             spreadsheetPanel1.SendToBack();
+            spreadsheetPanel1.Focus();
+            ContentField.BringToFront();
+            ContentField.Focus();
             this.Hide();
 
         }
@@ -55,6 +68,10 @@ namespace SpreadsheetGUI
 
             spreadsheetPanel1.SetSelection(0, 0);
             displaySelection(spreadsheetPanel1);
+            spreadsheetPanel1.SendToBack();
+            spreadsheetPanel1.Focus();
+            ContentField.BringToFront();
+            ContentField.Focus();
 
         }
 
@@ -63,6 +80,16 @@ namespace SpreadsheetGUI
 
         private void displaySelection(SpreadsheetPanel ss)
         {
+            // Used for periodically checking for cirular dependencies
+            //if (Stopwatch.IsRunning == false)
+            //    Stopwatch.Start();
+
+            //if(Stopwatch.ElapsedMilliseconds > 60000)
+            //{
+            //    PeriodicCircCheck(ss);
+            //    Stopwatch.Reset();
+            //}
+
             int row, col;
             String value;
 
@@ -77,6 +104,15 @@ namespace SpreadsheetGUI
             if (connected == true)
                 Model.Model.Focus(CellNameField.Text);
 
+            spreadsheetPanel1.GetFirstSelection(out int fcol, out int frow);
+
+            int xpos = LABEL_COL_WIDTH + (col - fcol) * DATA_COL_WIDTH + 1;
+            int ypos = LABEL_ROW_HEIGHT + (row - frow) * DATA_ROW_HEIGHT + 1;
+
+            ContentField.Location = new Point(xpos, ypos);
+            ContentField.BringToFront();
+            ContentField.Focus();
+            ContentsBar.Text = ContentField.Text;
 
             if (sheet.GetCellValue(CellNameField.Text) is FormulaError err)
             {
@@ -228,6 +264,35 @@ namespace SpreadsheetGUI
                 }
             }
         }
+
+        //public void PeriodicCircCheck(SpreadsheetPanel ss)
+        //{
+        //    HashSet<string> visited = new HashSet<string>();
+        //    ISet<String> circular = new HashSet<string>();
+
+        //    foreach (string name in sheet.GetNamesOfAllNonemptyCells())
+        //    {
+        //        foreach (string cell in sheet.GetDirectDependents(name))
+        //        {
+        //            if (!visited.Contains(cell))
+        //            {
+        //                CircularDependencyCheck(cell, cell, visited, circular);
+        //            }
+        //            circular.Add(cell);
+        //        }
+
+        //        foreach (String s in circular)
+        //        {
+        //            updateCell(s, ss);
+        //        }
+
+        //        foreach (string c in circular)
+        //        {
+        //            sheet.SetCellCircularStatus(c, false);
+        //        }
+        //    }
+        //}
+
 
 
         public void updateCell(string name, SpreadsheetPanel ss)
@@ -466,7 +531,7 @@ namespace SpreadsheetGUI
 
         private void ContentField_TextChanged(object sender, EventArgs e)
         {
-
+            ContentsBar.Text = ContentField.Text;
         }
 
         private void spreadsheetPanel1_Load(object sender, EventArgs e)
