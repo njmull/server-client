@@ -269,35 +269,6 @@ namespace SpreadsheetGUI
             }
         }
 
-        //public void PeriodicCircCheck(SpreadsheetPanel ss)
-        //{
-        //    HashSet<string> visited = new HashSet<string>();
-        //    ISet<String> circular = new HashSet<string>();
-
-        //    foreach (string name in sheet.GetNamesOfAllNonemptyCells())
-        //    {
-        //        foreach (string cell in sheet.GetDirectDependents(name))
-        //        {
-        //            if (!visited.Contains(cell))
-        //            {
-        //                CircularDependencyCheck(cell, cell, visited, circular);
-        //            }
-        //            circular.Add(cell);
-        //        }
-
-        //        foreach (String s in circular)
-        //        {
-        //            updateCell(s, ss);
-        //        }
-
-        //        foreach (string c in circular)
-        //        {
-        //            sheet.SetCellCircularStatus(c, false);
-        //        }
-        //    }
-        //}
-
-
 
         public void updateCell(string name, SpreadsheetPanel ss)
         {
@@ -312,8 +283,7 @@ namespace SpreadsheetGUI
             {
                 ss.SetValue(col, row, "FORMULA ERROR");
             }
-            
-
+           
             //CS 3505 changes ////////////////////////////////////
 
             if (sheet.GetCellCircularStatus(name) == true)
@@ -324,7 +294,6 @@ namespace SpreadsheetGUI
                 ss.SetValue(col, row, sheet.GetCellValue(name) + "");
 
             //end ////////////////////////////////////////////////
-
         }
 
         private void EnterButton_Click(object sender, EventArgs e)
