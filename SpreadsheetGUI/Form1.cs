@@ -139,7 +139,7 @@ namespace SpreadsheetGUI
             //Checks to see if a circular dependency was found and display #REF in the selected cell on update if it was
             if (isCircular == true)
             {
-                //MessageBox.Show("The formula you entered results in a circular exception.");
+                MessageBox.Show("The formula you entered results in a circular exception.");
                 ss.SetValue(col, row, "#REF ");
                 CellValueField.Text = "#REF ";
                 isCircular = false;
