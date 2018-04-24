@@ -324,11 +324,16 @@ namespace SpreadsheetGUI
 
         private void ListOfSpreadSheetsBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string curItem = ListOfSpreadSheetsBox.SelectedItem.ToString();
+            if (ListOfSpreadSheetsBox.SelectedItem != null)
+            {
+                string curItem = ListOfSpreadSheetsBox.SelectedItem.ToString();
             
-            string curItemTrimmed = curItem.Trim();
+                string curItemTrimmed = curItem.Trim();
 
-            LoadFileTextBox.Text = curItemTrimmed;
+                LoadFileTextBox.Text = curItemTrimmed;
+            }
+
+
         }
 
         private void Form2_FormClosing(object sender, FormClosingEventArgs e)

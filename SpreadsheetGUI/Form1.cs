@@ -117,8 +117,8 @@ namespace SpreadsheetGUI
 
             if (sheet.GetCellValue(CellNameField.Text) is FormulaError err)
             {
-                ss.SetValue(col, row, "FORMULA ERROR ");
-                CellValueField.Text = "FORMULA ERROR ";
+                ss.SetValue(col, row, "#REF ");
+                CellValueField.Text = "#REF ";
             }
 
             else
@@ -139,9 +139,9 @@ namespace SpreadsheetGUI
             //Checks to see if a circular dependency was found and display #REF in the selected cell on update if it was
             if (isCircular == true)
             {
-                MessageBox.Show("The formula you entered results in a circular exception.");
-                ss.SetValue(col, row, "#REF");
-                CellValueField.Text = "#REF";
+                //MessageBox.Show("The formula you entered results in a circular exception.");
+                ss.SetValue(col, row, "#REF ");
+                CellValueField.Text = "#REF ";
                 isCircular = false;
             }
 
@@ -306,19 +306,21 @@ namespace SpreadsheetGUI
 
             if (sheet.GetCellCircularStatus(name) == true)
             {
-                ss.SetValue(col, row, "#REF");
+                ss.SetValue(col, row, "#REF ");
             }
             if (sheet.GetCellValue(name) is FormulaError err)
             {
-                ss.SetValue(col, row, "FORMULA ERROR");
+                ss.SetValue(col, row, "#REF ");
             }
-            
+            //else
+            //    ss.SetValue(col, row, sheet.GetCellValue(name) + "");
+
 
             //CS 3505 changes ////////////////////////////////////
 
             if (sheet.GetCellCircularStatus(name) == true)
             {
-                ss.SetValue(col, row, "#REF");
+                ss.SetValue(col, row, "#REF ");
             }
             else if (sheet.GetCellCircularStatus(name) == false)
                 ss.SetValue(col, row, sheet.GetCellValue(name) + "");
@@ -522,10 +524,12 @@ namespace SpreadsheetGUI
 
         public void UpdateReceivedCellContents(string name, string value)
         {
+            
             int col = name.ElementAt(0) - 65;
             int row = int.Parse(name.Substring(1)) - 1;
             sheet.SetContentsOfCell(name, value);
-            spreadsheetPanel1.SetValue(col, row, value);
+            string cellVal = sheet.GetCellValue(name).ToString();
+            spreadsheetPanel1.SetValue(col, row, cellVal);
             this.Invoke(new MethodInvoker(() => displaySelection(spreadsheetPanel1)));
 
         }
