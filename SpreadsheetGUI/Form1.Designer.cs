@@ -32,6 +32,7 @@ namespace SpreadsheetGUI
         {
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -72,6 +73,7 @@ namespace SpreadsheetGUI
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.newToolStripMenuItem,
             this.saveToolStripMenuItem,
             this.saveAsToolStripMenuItem,
             this.closeToolStripMenuItem});
@@ -79,23 +81,30 @@ namespace SpreadsheetGUI
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
             // 
+            // newToolStripMenuItem
+            // 
+            this.newToolStripMenuItem.Name = "newToolStripMenuItem";
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.newToolStripMenuItem.Text = "New";
+            this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click_1);
+            // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.saveToolStripMenuItem.Text = "Save";
             // 
             // saveAsToolStripMenuItem
             // 
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.saveAsToolStripMenuItem.Text = "Save as...";
             this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
             // 
             // closeToolStripMenuItem
             // 
             this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
-            this.closeToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
+            this.closeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.closeToolStripMenuItem.Text = "Close";
             this.closeToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
             // 
@@ -131,6 +140,7 @@ namespace SpreadsheetGUI
             this.ContentField.TabStop = false;
             this.ContentField.TextChanged += new System.EventHandler(this.ContentField_TextChanged);
             this.ContentField.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ContentField_KeyDown);
+            this.ContentField.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.ContentField_KeyPress);
             this.ContentField.Validating += new System.ComponentModel.CancelEventHandler(this.ContentField_Validating);
             // 
             // CellNameField
@@ -162,7 +172,6 @@ namespace SpreadsheetGUI
             this.CellValueField.ReadOnly = true;
             this.CellValueField.Size = new System.Drawing.Size(149, 20);
             this.CellValueField.TabIndex = 7;
-            this.CellValueField.TextChanged += new System.EventHandler(this.CellValueField_TextChanged);
             // 
             // label1
             // 
@@ -316,6 +325,7 @@ namespace SpreadsheetGUI
         private System.Windows.Forms.Button RevertButton;
         private System.Windows.Forms.Button UndoButton;
         private System.Windows.Forms.TextBox ContentsBar;
+        private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
     }
 }
 

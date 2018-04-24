@@ -85,7 +85,7 @@ namespace SpreadsheetGUI
             //if (Stopwatch.IsRunning == false)
             //    Stopwatch.Start();
 
-            //if(Stopwatch.ElapsedMilliseconds > 60000)
+            //if(Stopwatch.ElapsedMilliseconds  60000)
             //{
             //    PeriodicCircCheck(ss);
             //    Stopwatch.Reset();
@@ -146,10 +146,9 @@ namespace SpreadsheetGUI
             }
 
             //end//////////////////////////////////////////////////////////////
-
-
-
             ContentField.Focus();
+
+
         }
 
         // Deals with the New menu
@@ -486,7 +485,11 @@ namespace SpreadsheetGUI
                     // Add disconnect functionality...  disconnect();
                     e.Cancel = false;
                     connected = false;
+                    Model.Model.Unfocus();
+                    Model.Model.Disconnect();
+                    Program.ConnectForm.ssclosing = true;
                     Program.ConnectForm.Close();
+                   
                 }
                 else if (result == DialogResult.No)
                     e.Cancel = true;
@@ -498,6 +501,7 @@ namespace SpreadsheetGUI
         private void UndoButton_Click(object sender, EventArgs e)
         {
             Model.Model.Undo();
+            ContentField.Invalidate();
         }
 
         private void undoToolStripMenuItem_Click(object sender, EventArgs e)
@@ -508,6 +512,7 @@ namespace SpreadsheetGUI
         private void RevertButton_Click(object sender, EventArgs e)
         {
             Model.Model.Revert(CellNameField.Text);
+            ContentField.Invalidate();
         }
 
         private void revertToolStripMenuItem_Click(object sender, EventArgs e)
@@ -521,12 +526,15 @@ namespace SpreadsheetGUI
             int row = int.Parse(name.Substring(1)) - 1;
             sheet.SetContentsOfCell(name, value);
             spreadsheetPanel1.SetValue(col, row, value);
+            this.Invoke(new MethodInvoker(() => displaySelection(spreadsheetPanel1)));
+
         }
         public void UpdateFocus(string cell, int id)
         {
             int col = cell.ElementAt(0) - 65;
             int row = int.Parse(cell.Substring(1)) - 1;
             spreadsheetPanel1.AddFocus(id, col, row);
+            spreadsheetPanel1.Invalidate();
         }
 
         public void Unfocus(int id)
@@ -544,14 +552,43 @@ namespace SpreadsheetGUI
 
         }
 
-        private void CellValueField_TextChanged(object sender, EventArgs e)
+        private void Form1_Load(object sender, EventArgs e)
         {
 
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void newToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
+            HashSet<string> nonempty = new HashSet<string>();
 
+            foreach (string s in sheet.GetNamesOfAllNonemptyCells())
+                nonempty.Add(s);
+            foreach (string s in nonempty)
+                sheet.SetContentsOfCell(s, string.Empty);
+
+            this.Enabled = false;
+            this.Hide();
+            this.WindowState = FormWindowState.Minimized;
+            this.Invoke(new MethodInvoker(() => Program.ConnectForm.Visible = true));
+            this.Invoke(new MethodInvoker(() => Program.ConnectForm.Enabled = true));
+            this.Invoke(new MethodInvoker(() => Program.ConnectForm.Show()));
+            this.Invoke(new MethodInvoker(() => Program.ConnectForm.Focus()));
+            this.Invoke(new MethodInvoker(() => Program.ConnectForm.WindowState = FormWindowState.Normal));
+            Model.Model.Unfocus();
+            spreadsheetPanel1.Clear();
+            this.spreadsheetPanel1.Invalidate();
+
+
+        }
+
+        private void ContentField_KeyPress(object sender, KeyPressEventArgs e)
+        {
+                if (e.KeyChar == (char)Keys.Enter)
+                {
+                    e.Handled = true;
+                    
+                }
+            
         }
     }
 }

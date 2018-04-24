@@ -67,6 +67,7 @@
             this.OutputLog.Location = new System.Drawing.Point(471, 277);
             this.OutputLog.Margin = new System.Windows.Forms.Padding(2);
             this.OutputLog.Name = "OutputLog";
+            this.OutputLog.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
             this.OutputLog.Size = new System.Drawing.Size(276, 79);
             this.OutputLog.TabIndex = 11;
             this.OutputLog.Text = "";

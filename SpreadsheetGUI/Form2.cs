@@ -24,6 +24,7 @@ namespace SpreadsheetGUI
         static Timer TimeoutClock;
         static int timeLeft = 60;
         static Socket theServer;
+        public bool ssclosing = false;
 
         public Form2()
         {
@@ -124,11 +125,11 @@ namespace SpreadsheetGUI
             {
                 Receive(p);
 
-                // Output log window for debugging.
+                //Output log window for debugging.
                 //try
-                //{
-                //    this.Invoke(new MethodInvoker(() => OutputLog.AppendText(p)));
-                //}
+                //    {
+                //        this.Invoke(new MethodInvoker(() => OutputLog.AppendText(p)));
+                //    }
                 //catch { }
 
                 // Then remove the processed message from the SocketState's growable buffer
@@ -144,6 +145,7 @@ namespace SpreadsheetGUI
         // it appropriately.
         public void Receive(string cmd)
         {
+            string line = Convert.ToString((char)10);
             // Acknowledge new client and give list of existing spreadsheets. The list may be empty.
             if (cmd.Contains("connect_accepted "))
             {
@@ -200,13 +202,14 @@ namespace SpreadsheetGUI
             // The full state of the spreadsheet, with the id and contents of every non-empty cell
             if (cmd.Contains("full_state "))
             {
+                
                 string temp = cmd.Substring(cmd.IndexOf(' ') + 1);
-                string[] sheets = Regex.Split(temp, "\n");             
+                string[] sheets = Regex.Split(temp, line);             
                 foreach(string s in sheets)
                 {
                     if (s == string.Empty)
                         break;
-                    string[] pairs = s.Split(':');
+                    string[] pairs = s.Split(new char[] { ':' }, 2);
                     string cell = pairs[0];
                     string value = pairs[1];
                     UpdateCell(cell, value);
@@ -219,7 +222,7 @@ namespace SpreadsheetGUI
             if (cmd.Contains("change "))
             {
                 string temp = cmd.Substring(cmd.IndexOf(' ') + 1);
-                string[] pairs = temp.Split(':');
+                string[] pairs = temp.Split(new char[] { ':' }, 2);
                 string cell = pairs[0];
                 string value = pairs[1];
                 this.Invoke(new MethodInvoker(() => UpdateCell(cell, value)));
@@ -326,6 +329,13 @@ namespace SpreadsheetGUI
             string curItemTrimmed = curItem.Trim();
 
             LoadFileTextBox.Text = curItemTrimmed;
+        }
+
+        private void Form2_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Model.Model.Unfocus();
+            if(ssclosing != true)
+                Program.MainForm.Close();
         }
     }
 }

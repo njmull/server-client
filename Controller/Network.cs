@@ -196,7 +196,6 @@ namespace Controller
             {
                 Console.WriteLine("Client has disconnected " + e);
             }
-
         }
 
         /// <summary>
