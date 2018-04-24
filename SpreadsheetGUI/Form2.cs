@@ -321,6 +321,9 @@ namespace SpreadsheetGUI
                 this.Invoke(new MethodInvoker(() => Program.MainForm.WindowState = FormWindowState.Normal));
                 Program.MainForm.Show();
                 Program.MainForm.Focus();
+                ///
+                Program.MainForm.Text = LoadFileTextBox.Text;
+                ///
                 this.WindowState = FormWindowState.Minimized;
                 this.Hide();
                 this.Enabled = false;
