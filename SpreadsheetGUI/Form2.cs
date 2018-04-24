@@ -209,10 +209,15 @@ namespace SpreadsheetGUI
                 {
                     if (s == string.Empty)
                         break;
+
                     string[] pairs = s.Split(new char[] { ':' }, 2);
-                    string cell = pairs[0];
-                    string value = pairs[1];
-                    UpdateCell(cell, value);
+                    if (pairs.Length > 1)
+                    {
+                        string cell = pairs[0];
+                        string value = pairs[1];
+                        this.Invoke(new MethodInvoker(() => UpdateCell(cell, value)));
+                    }
+
                 }
                 cmd = string.Empty;
             }
@@ -223,9 +228,13 @@ namespace SpreadsheetGUI
             {
                 string temp = cmd.Substring(cmd.IndexOf(' ') + 1);
                 string[] pairs = temp.Split(new char[] { ':' }, 2);
-                string cell = pairs[0];
-                string value = pairs[1];
-                this.Invoke(new MethodInvoker(() => UpdateCell(cell, value)));
+                if (pairs.Length > 1)
+                {
+                    string cell = pairs[0];
+                    string value = pairs[1];
+                    this.Invoke(new MethodInvoker(() => UpdateCell(cell, value)));
+                }
+                
                 cmd = string.Empty;
 
             }
@@ -238,10 +247,13 @@ namespace SpreadsheetGUI
                 {
                     string temp = cmd.Substring(cmd.IndexOf(' ') + 1);
                     string[] pairs = temp.Split(':');
-                    string cell = pairs[0];
-                    string name = pairs[1];
-                    int id = Int32.Parse(name);
-                    Program.MainForm.UpdateFocus(cell, id);
+                    if (pairs.Length > 1)
+                    {
+                        string cell = pairs[0];
+                        string name = pairs[1];
+                        int id = Int32.Parse(name);
+                        Program.MainForm.UpdateFocus(cell, id);
+                    }
                     cmd = string.Empty;
                 }
             }
