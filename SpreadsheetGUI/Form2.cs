@@ -353,9 +353,10 @@ namespace SpreadsheetGUI
 
         private void Form2_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Model.Model.Unfocus();
-            if(ssclosing != true)
+            if (ssclosing != true)
+            {
                 Program.MainForm.Close();
+            }
         }
     }
 }

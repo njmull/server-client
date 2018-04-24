@@ -29,7 +29,7 @@ namespace SpreadsheetGUI
         private const int SCROLLBAR_WIDTH = 20;
         private const int COL_COUNT = 26;
         private const int ROW_COUNT = 99;
-        Stopwatch Stopwatch = new Stopwatch();
+        
 
 
         /// <summary>
@@ -495,8 +495,6 @@ namespace SpreadsheetGUI
                 }
                 else if (result == DialogResult.No)
                     e.Cancel = true;
-                //else
-                //    e.Cancel = true;
             }
         }
 

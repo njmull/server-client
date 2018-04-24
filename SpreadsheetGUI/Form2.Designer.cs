@@ -183,6 +183,7 @@
             this.Controls.Add(this.panel1);
             this.Name = "Form2";
             this.Text = "Server Window";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form2_FormClosing);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);
