@@ -29,7 +29,6 @@ namespace SpreadsheetGUI
         private const int SCROLLBAR_WIDTH = 20;
         private const int COL_COUNT = 26;
         private const int ROW_COUNT = 99;
-        Stopwatch Stopwatch = new Stopwatch();
 
 
         /// <summary>
@@ -81,15 +80,6 @@ namespace SpreadsheetGUI
 
         private void displaySelection(SpreadsheetPanel ss)
         {
-            // Used for periodically checking for cirular dependencies
-            //if (Stopwatch.IsRunning == false)
-            //    Stopwatch.Start();
-
-            //if(Stopwatch.ElapsedMilliseconds  60000)
-            //{
-            //    PeriodicCircCheck(ss);
-            //    Stopwatch.Reset();
-            //}
 
             int row, col;
             String value;
